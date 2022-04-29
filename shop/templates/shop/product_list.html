@@ -1,0 +1,152 @@
+{% extends 'shop/base.html' %}
+
+{% load static %}
+
+{% block title %}
+    {% if category %}{{ category.title }}{% else %}Products{% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-4 categories">
+            <div class="card">
+                <div class="card-header bg-primary bg-gradient text-white">Categories</div>
+                <div class="card-body">
+                    <ul class="nav nav-pills flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link bg-gradient {% if not category %}active{% endif %}"
+                               href="{% url 'shop:product_list' 1 %}">All</a>
+                        </li>
+                        {% for c in categories %}
+                            <li class="nav-item">
+                                <a class="nav-link bg-gradient {% if category.slug == c.slug %}active{% endif %}"
+                                   href="{{ c.get_absolute_url }}">{{ c.title }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="row">
+                <div class="col-lg-12">
+                    <form method="get" class="d-flex m-auto p-3 w-75">
+                        <input class="form-control me-2" type="text" name="search_field" placeholder="Search product">
+                        <button class="btn btn-primary bg-gradient" type="submit">Search</button>
+                    </form>
+                </div>
+                {% if query %}
+                    <h1>Posts containing "{{ query }}"</h1>
+                    <h3>
+                        {% with products.count as total_products %}
+                            Found {{ total_products }} product{{ total_products|pluralize }}
+                        {% endwith %}
+                    </h3>
+                    {% for product in products %}
+                        <div class="col-lg-6">
+                            <div class="card product m-auto mt-1">
+                                {% if product.image %}
+                                    <img class="card-img-top"
+                                         src="{{ product.image.url }}"
+                                         alt="Product image">
+                                    <div class="card-img-overlay p-5">
+                                        <h4 class="card-title text-white">{{ product.name }}</h4>
+                                        <p class="card-text text-white pb-3">{{ product.description|truncatewords:10 }}</p>
+                                        <a href="{{ product.get_absolute_url }}"
+                                           class="btn btn-primary bg-gradient">Buy
+                                            for {{ product.price }}$</a>
+                                    </div>
+                                {% else %}
+                                    <img class="card-img-top"
+                                         src="{% static 'shop/img/no_image.png' %}"
+                                         alt="Product image">
+                                    <div class="card-img-overlay p-5">
+                                        <h4 class="card-title text-black">{{ product.name }}</h4>
+                                        <p class="card-text text-black pb-3">{{ product.description|truncatewords:10 }}</p>
+                                        <a href="{{ product.get_absolute_url }}"
+                                           class="btn btn-primary bg-gradient">Buy
+                                            for {{ product.price }}$</a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    {% if message %}
+                        <div class="col-lg-12">
+                            <h3>{{ message }}</h3>
+                        </div>
+                    {% else %}
+                        {% for product in products %}
+                            <div class="col-lg-6">
+                                <div class="card product m-auto mt-1">
+                                    {% if product.image %}
+                                        <img class="card-img-top"
+                                             src="{{ product.image.url }}"
+                                             alt="Product image">
+                                        <div class="card-img-overlay p-5">
+                                            <h4 class="card-title text-white">{{ product.name }}</h4>
+                                            <p class="card-text text-white pb-3">{{ product.description|truncatewords:10 }}</p>
+                                            <a href="{{ product.get_absolute_url }}"
+                                               class="btn btn-primary bg-gradient">Buy
+                                                for {{ product.price }}$</a>
+                                        </div>
+                                    {% else %}
+                                        <img class="card-img-top"
+                                             src="{% static 'shop/img/no_image.png' %}"
+                                             alt="Product image">
+                                        <div class="card-img-overlay p-5">
+                                            <h4 class="card-title text-black">{{ product.name }}</h4>
+                                            <p class="card-text text-black pb-3">{{ product.description|truncatewords:10 }}</p>
+                                            <a href="{{ product.get_absolute_url }}"
+                                               class="btn btn-primary bg-gradient">Buy
+                                                for {{ product.price }}$</a>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <div class="col-lg-12 mt-2">
+                            <ul class="pagination justify-content-center" style="margin:20px 0">
+                                {% if products.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                           href="
+                                                   {% if category %}{% url 'shop:product_list_by_category' 1 category.slug %}{% else %}{% url 'shop:product_list' 1 %}{% endif %}">First</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="
+                                                {% if category %}{% url 'shop:product_list_by_category' products.previous_page_number category.slug %}{% else %}{% url 'shop:product_list' products.previous_page_number %}{% endif %}">Previous</a>
+                                    </li>
+                                {% endif %}
+                                {% for page_number in products.adjusted_elided_pages %}
+                                    {% if page_number == products.paginator.ELLIPSIS %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="">...</a>
+                                        </li>
+                                    {% else %}
+                                        <li class="page-item {% if page_number == products.number %}active{% endif %}">
+                                            <a class="page-link"
+                                               href="{% if category %}{% url 'shop:product_list_by_category' page_number category.slug %}{% else %}{% url 'shop:product_list' page_number %}{% endif %}">{{ page_number }}</a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if products.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                           href="
+                                                   {% if category %}{% url 'shop:product_list_by_category' products.next_page_number category.slug %}{% else %}{% url 'shop:product_list' products.next_page_number %}{% endif %}">Next</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="
+                                                {% if category %}{% url 'shop:product_list_by_category' products.paginator.num_pages category.slug %}{% else %}{% url 'shop:product_list' products.paginator.num_pages %}{% endif %}">Last</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

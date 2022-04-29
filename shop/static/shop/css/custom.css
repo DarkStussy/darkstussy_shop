@@ -1,0 +1,25 @@
+.cart-shop, .my-footer ul li a {
+    text-decoration: none;
+    transition: all .2s;
+}
+
+.cart-shop:hover, .my-footer ul li a:hover {
+    font-size: 18px;
+}
+
+.fa-twitter, .fa-instagram, .fa-facebook {
+    transition: all .1s;
+}
+
+.fa-twitter:hover, .fa-instagram:hover, .fa-facebook:hover {
+    transform: scale(1.2);
+}
+
+.product, .product img {
+    width: 280px;
+    height: 260px;
+}
+
+.detail-product-image {
+    width: 300px;
+}

@@ -1,0 +1,56 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'shop/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/css/custom.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+</head>
+<body>
+<header class="p-3 mb-3" style="font-family: Montserrat">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="{% url 'shop:home' %}" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+                <img src="{% static 'shop/img/Stussy.png' %}" width="135" height="85">
+            </a>
+
+            <div class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            </div>
+
+            <div class="col-lg-auto">
+                <a class="cart-shop btn btn-outline-dark rounded" href="#"><i class="fa-solid fa-cart-arrow-down"></i>
+                    Your cart: 5 items, $122.4$</a>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container text-center" style="font-family: Poppins">{% block content %}{% endblock %}</div>
+<footer class="py-3 my-4 my-footer" style="font-family: Montserrat">
+    <ul class="nav justify-content-center border-top pt-3 pb-3 mb-3">
+        <li class="nav-item"><a href="{% url 'shop:home' %}" class="nav-link px-2 text-muted">Home</a></li>
+        <li class="nav-item"><a href="{% url 'shop:product_list' 1 %}" class="nav-link px-2 text-muted">Products</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
+    </ul>
+    <p class="text-center text-muted">© 2022 DarkStussy</p>
+
+    <ul class="list-unstyled justify-content-center me-2 d-flex">
+        <li class="ms-3"><a class="link-dark" href="#">
+            <i class="fa-brands fa-twitter"></i>
+        </a></li>
+        <li class="ms-3"><a class="link-dark" href="#">
+            <i class="fa-brands fa-instagram"></i>
+        </a></li>
+        <li class="ms-3"><a class="link-dark" href="#">
+            <i class="fa-brands fa-facebook"></i>
+        </a></li>
+    </ul>
+</footer>
+<script src="{% static 'shop/js/bootstrap.bundle.js' %}"></script>
+</body>
+</html>
