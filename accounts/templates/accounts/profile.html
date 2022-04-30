@@ -1,0 +1,63 @@
+{% extends 'shop/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Registration{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <p>Username: {{ user.username }}</p>
+        <p>First Name: {{ user.first_name }}</p>
+        <p>Last Name: {{ user.last_name }}</p>
+        <p>Email: {{ user.email }}</p>
+    </div>
+    <div class="btn-group-vertical">
+        <button class="btn btn-outline-dark prf-btn" data-bs-toggle="modal"
+                data-bs-target="#myPassChange">Change pass
+        </button>
+        <button type="button" class="btn btn-outline-dark prf-btn" data-bs-toggle="modal"
+                data-bs-target="#myPrfEdit">Edit Profile
+        </button>
+        <a class="btn btn-outline-dark prf-btn" href="{% url 'logout' %}?next={{ request.path }}">Log out</a>
+    </div><br>
+
+    <div class="modal fade" tabindex="-1" id="myPrfEdit" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content mod-cont">
+                <div class="modal-header">
+                    <h5 class="modal-title h-user">Edit Profile</h5>
+                </div>
+                <div class="modal-body edit-prf">
+                    <form method="post">
+                        {{ user_form|crispy }}
+                        {% csrf_token %}
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary bg-gradient" type="submit">Save changes</button>
+                    </form>
+                    <button type="button" class="btn btn-danger bg-gradient" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" id="myPassChange" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content mod-cont">
+                <div class="modal-header">
+                    <h5 class="modal-title h-user">Change password</h5>
+                </div>
+                <div class="modal-body edit-prf">
+                    <form method="post">
+                        {{ pass_form|crispy }}
+                        {% csrf_token %}
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary bg-gradient" type="submit">Save changes</button>
+                    </form>
+                    <button type="button" class="btn btn-danger bg-gradient" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

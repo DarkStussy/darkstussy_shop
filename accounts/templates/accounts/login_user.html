@@ -1,0 +1,28 @@
+{% extends 'shop/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Registration{% endblock %}
+
+{% block content %}
+    <form method="post" class="w-50 m-auto">
+        {% csrf_token %}
+        {% if error %}
+            <div class="mb-3 text-center"><p style="color: darkred">{{ error }}</p></div>
+        {% endif %}
+        <div class="mb-5"><label class="form-label" for="username">Username</label><input class="form-control"
+                                                                                          type="text"
+                                                                                          name="username"
+                                                                                          id="username"></div>
+        <div class="mb-3"><label class="form-label" for="password">Password</label><input class="form-control"
+                                                                                          type="password"
+                                                                                          name="password"
+                                                                                          id="password"></div>
+        <div class="mb-3 text-center">
+            <button class="btn btn-primary d-block w-50 m-auto bg-gradient" type="submit">Login</button>
+            <br>
+            <a href="{% url 'c_accounts:register' %}">Click here to create an account</a><br>
+            <a href="{% url 'password_reset' %}">Forgot your password?</a>
+        </div>
+    </form>
+{% endblock %}
