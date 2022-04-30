@@ -13,6 +13,7 @@ from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 
 from accounts.token import account_activation_token
+from cart.models import Cart
 
 
 def login_user(request):
@@ -69,6 +70,7 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
+        Cart.objects.create(user=user)
         return render(request, 'accounts/register_done.html')
     else:
         return HttpResponse('Activation link is invalid!')

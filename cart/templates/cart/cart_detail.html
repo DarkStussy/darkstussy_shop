@@ -1,0 +1,57 @@
+{% extends 'shop/base.html' %}
+
+{% load static %}
+
+{% block title %}Cart{% endblock %}
+
+{% block content %}
+    <table class="table table-borderless table-hover">
+        <thead class="bg-primary bg-gradient text-white">
+        <tr>
+            <th scope="col">Image</th>
+            <th scope="col">Product</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Remove</th>
+            <th scope="col">Unit price</th>
+            <th scope="col">Total price</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in cart_items %}
+            <tr class="bg-light">
+                <td>
+                    {% if item.product.image %}
+                        <img src="{{ item.product.image.url }}" width="160" height="140">
+                    {% else %}
+                        <img src="{% static 'shop/img/no_image.png' %}" width="160" height="140">
+                    {% endif %}
+                </td>
+                <td class="text-center" style="text-align: center">{{ item.product.name }}</td>
+                <td>
+                    <a href="{% url 'shop:product_detail' item.product.id item.product.slug %}"
+                       class="btn btn-primary btn-sm bg-gradient">{{ item.quantity }}</a>
+                </td>
+                <td>
+                    <form action="{% url 'cart:cart_remove' item.product.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger bg-gradient btn-sm">Remove</button>
+                    </form>
+                </td>
+                <td>{{ item.price }}</td>
+                <td>${{ item.total_price }}</td>
+            </tr>
+        {% endfor %}
+        <tr class="bg-primary bg-gradient text-white">
+            <th>Total</th>
+            <th colspan="4"></th>
+            <td>${{ total_price }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="text-end">
+        <div class="btn-group" role="group">
+            <a href="{% url 'shop:product_list' 1 %}" class="btn btn-outline-secondary">Continue</a>
+            <a href="" class="btn btn-outline-primary">Checkout</a>
+        </div>
+    </div>
+{% endblock %}

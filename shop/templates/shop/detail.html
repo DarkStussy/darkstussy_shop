@@ -1,6 +1,7 @@
 {% extends 'shop/base.html' %}
 
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block title %}{{ product.name }}{% endblock %}
 
@@ -8,15 +9,26 @@
     <div class="row">
         <div class="col-lg-4">
             <img class="detail-product-image" src="
+
+
+
                     {% if product.image %}{{ product.image.url }}{% else %}{% static 'shop/img/no_image.png' %}{% endif %}">
         </div>
-        <div class="col-lg-8 text-center border-start border-bottom">
+        <div class="col-lg-8 text-center border">
             <h4>{{ product.name }}</h4>
             <h3>${{ product.price }}</h3>
             <p class="text-muted">
                 {{ product.description }}
             </p>
-            <button class="mt-2 mb-2 btn btn-primary bg-gradient">Add to cart</button>
+            {% if user.is_authenticated %}
+                <form action="{% url 'cart:cart_add' product.id %}" method="POST">
+                    <div class="d-flex justify-content-center" style="height: 38px">
+                        {{ cart_product_form|crispy }}
+                        <button class="ms-1 btn btn-primary bg-gradient" type="submit">Add to cart</button>
+                    </div>
+                    {% csrf_token %}
+                </form>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

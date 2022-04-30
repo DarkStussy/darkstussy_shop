@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.postgres.search import TrigramSimilarity
 from django.core.paginator import Paginator
 
+from cart.forms import CartAddProductForm
 from shop.models import Product, Category
 
 
@@ -39,5 +40,5 @@ def product_list(request, page, category_slug=None):
 
 def product_detail(request, id, slug):
     product = get_object_or_404(Product, id=id, slug=slug, available=True)
-    return render(request, 'shop/detail.html', {'product': product})
-
+    cart_product_form = CartAddProductForm()
+    return render(request, 'shop/detail.html', {'product': product, 'cart_product_form': cart_product_form})
