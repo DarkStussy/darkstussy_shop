@@ -51,7 +51,7 @@
     <div class="text-end">
         <div class="btn-group" role="group">
             <a href="{% url 'shop:product_list' 1 %}" class="btn btn-outline-secondary">Continue</a>
-            <a href="" class="btn btn-outline-primary">Checkout</a>
+            <a href="{% url 'orders:create' %}" class="btn btn-outline-primary">Checkout</a>
         </div>
     </div>
 {% endblock %}

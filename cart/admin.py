@@ -8,7 +8,7 @@ class CartItemInline(admin.TabularInline):
 
 
 @admin.register(Cart)
-class OrderAdmin(admin.ModelAdmin):
+class CartAdmin(admin.ModelAdmin):
     list_display = ['id', 'user', 'created']
     list_filter = ['user', 'created']
     inlines = [CartItemInline]

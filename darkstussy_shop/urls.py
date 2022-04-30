@@ -9,6 +9,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('accounts.urls', namespace='c_accounts')),
     path('cart/', include('cart.urls', namespace='cart')),
+    path('order/', include('orders.urls', namespace='orders')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:
