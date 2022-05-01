@@ -23,3 +23,12 @@
 .detail-product-image {
     width: 300px;
 }
+
+.notpaid {
+    transition: all .1s;
+}
+
+.notpaid:hover {
+    font-size: 18px;
+    text-decoration: none;
+}

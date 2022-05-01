@@ -1,0 +1,48 @@
+{% extends 'shop/base.html' %}
+
+
+{% block title %}Your orders{% endblock %}
+
+{% block content %}
+    <table class="table table-borderless">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Products</th>
+            <th scope="col">Address</th>
+            <th scope="col">Created</th>
+            <th scope="col">Total price</th>
+            <th scope="col">Paid</th>
+            <th scope="col">Invoice</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for order in orders %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-primary bg-gradient" type="button" id="dropdownProductsButton{{ forloop.counter }}"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            List of products
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownProductsButton{{ forloop.counter }}">
+                            {% for item in order.items.all %}
+                                <li><a class="dropdown-item" href="#">{{ item.quantity }}*{{ item.product.name }} -
+                                    ${{ item.get_cost }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </td>
+                <td>{{ order.address }}</td>
+                <td>{{ order.created }}</td>
+                <td>${{ order.get_total_cost }}</td>
+                <td>{% if order.paid %}<p class="text-success">Paid</p>{% else %}
+                    <a href="{% url 'payment:process' order.id %}" class="text-danger notpaid">Not paid</a>{% endif %}
+                </td>
+                <td><a class="notpaid" href="{% url 'orders:order_pdf' order.id %}">PDF</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

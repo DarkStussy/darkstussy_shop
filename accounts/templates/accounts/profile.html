@@ -12,13 +12,14 @@
         <p>Email: {{ user.email }}</p>
     </div>
     <div class="btn-group-vertical">
-        <button class="btn btn-outline-dark prf-btn" data-bs-toggle="modal"
+        <a class="btn btn-outline-dark" href="{% url 'orders:orders' %}">Your orders</a>
+        <button class="btn btn-outline-dark" data-bs-toggle="modal"
                 data-bs-target="#myPassChange">Change pass
         </button>
-        <button type="button" class="btn btn-outline-dark prf-btn" data-bs-toggle="modal"
+        <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
                 data-bs-target="#myPrfEdit">Edit Profile
         </button>
-        <a class="btn btn-outline-dark prf-btn" href="{% url 'logout' %}?next={{ request.path }}">Log out</a>
+        <a class="btn btn-outline-dark" href="{% url 'logout' %}?next={{ request.path }}">Log out</a>
     </div><br>
 
     <div class="modal fade" tabindex="-1" id="myPrfEdit" role="dialog">

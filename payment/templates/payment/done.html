@@ -1,0 +1,10 @@
+{% extends 'shop/base.html' %}
+
+
+{% block title %}Payment done{% endblock %}
+
+{% block content %}
+    <h1>Your payment was successful</h1>
+    <p>Your payment has been processed successfully.</p>
+    <a href="{% url 'orders:orders' %}" class="btn btn-primary bg-gradient">See your orders</a>
+{% endblock %}

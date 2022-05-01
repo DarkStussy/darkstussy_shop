@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
+import braintree
 from pathlib import Path
 
 from django.contrib import messages
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
+    'payment.apps.PaymentConfig',
 ]
 
 MIDDLEWARE = [
@@ -155,3 +157,15 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 LOGIN_REDIRECT_URL = 'c_accounts:login-user'
 LOGIN_URL = 'c_accounts:login-user'
 LOGOUT_REDIRECT_URL = 'c_accounts:login-user'
+
+# Braintree settings
+BRAINTREE_MERCHANT_ID = str(os.getenv('BRAINTREE_MERCHANT_ID'))  # Merchant ID
+BRAINTREE_PUBLIC_KEY = str(os.getenv('BRAINTREE_PUBLIC_KEY'))  # Public Key
+BRAINTREE_PRIVATE_KEY = str(os.getenv('BRAINTREE_PRIVATE_KEY'))  # Private key
+
+BRAINTREE_CONF = braintree.Configuration(
+    braintree.Environment.Sandbox,
+    BRAINTREE_MERCHANT_ID,
+    BRAINTREE_PUBLIC_KEY,
+    BRAINTREE_PRIVATE_KEY
+)
