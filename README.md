@@ -5,7 +5,7 @@ Convenient, adaptive interface.
 
 Stack: Bootstrap, Django, PostgreSQL, braintree.
 
-How to use the project:
+# How to use the project:
 
 !Requires PostgreSQL to run!
 
