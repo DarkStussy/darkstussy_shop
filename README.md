@@ -9,7 +9,7 @@ Stack: Bootstrap, Django, PostgreSQL, braintree.
 
 !Requires PostgreSQL to run!
 
-CONSOLE
+### CONSOLE
 
 Cloning the project
 
