@@ -15,7 +15,7 @@ Cloning the project
 
 > git clone https://github.com/DarkStussy/darkstussy_shop.git
 
-> cd django_website
+> cd darkstussy_shop
 
 Create virtual environment
 
